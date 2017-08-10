@@ -1,0 +1,26 @@
+{
+  "name": "lipa",
+  "version": "1.0.0",
+  "description": "Lipa is mobile money payment system for easey payment intergration to your site",
+  "main": "backend/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lipa",
+    "payment"
+  ],
+  "author": "chrispinus",
+  "license": "ISC",
+  "dependencies": {
+    "env2": "^2.2.0",
+    "hapi": "^16.5.0",
+    "hapi-postgres-connection": "^6.2.0",
+    "inert": "^4.2.1",
+    "pg": "^7.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/username/repository.git"
+  }
+}

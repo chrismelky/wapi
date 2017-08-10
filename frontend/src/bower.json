@@ -1,0 +1,18 @@
+{
+  "name": "src",
+  "authors": [
+    "chris <chrismelky05@gmail.com>"
+  ],
+  "description": "Front end",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
