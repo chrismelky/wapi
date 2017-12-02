@@ -13,14 +13,15 @@
   "author": "chrispinus",
   "license": "ISC",
   "dependencies": {
-    "env2": "^2.2.0",
-    "hapi": "^16.5.0",
-    "hapi-postgres-connection": "^6.2.0",
-    "inert": "^4.2.1",
-    "pg": "^7.1.0"
+    "bluebird": "^3.5.1",
+    "boom": "^7.1.1",
+    "hapi": "^17.1.1",
+    "inert": "^5.0.1",
+    "joi": "^13.0.2",
+    "mongoose": "^4.13.5"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/username/repository.git"
+    "url": "git://github.com/chrismelky/wapi"
   }
 }

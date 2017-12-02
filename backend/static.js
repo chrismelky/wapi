@@ -7,4 +7,4 @@ exports.get = {
       index: true
     }
   }
-}
+};

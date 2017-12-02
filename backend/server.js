@@ -1,38 +1,27 @@
-'use strict';
-
-const Hapi = require('hapi');
-const Routes = require('./routes');
 const Path = require('path');
+const Hapi = require('hapi');
 const Inert = require('inert');
-const Config = require('./config/config');
-require('env2')('.env');
-
-var app = {};
-app.config = Config;
-console.log(process.env.DATABASE_URL);
+const Routes = require('./routes');
+const Db = require('./config/db');
 
 const server = new Hapi.Server({
-  connections: {
-        routes: {
-            files: {
-                relativeTo: Path.join(__dirname, '../frontend/dist')
-            }
+    port: 3000,
+    routes: {
+        files: {
+            relativeTo: Path.join(__dirname, '../webapp/public')
         }
     }
 });
 
-server.connection({port:app.config.server.port, host:app.config.server.host});
-server.register([
-             Inert,
-             require('hapi-postgres-connection')
-  ], (err) => {
-  });
+const provision = async () => {
 
-server.route(Routes.endPoints);
+    await server.register(Inert);
 
-server.start((err)=>{
-   if(err){
-     throw err;
-   }
-   console.log('server started at : '+ server.info.uri);
- });
+    server.route(Routes.endPoints);
+
+    await server.start();
+
+    console.log('Server running at:', server.info.uri);
+};
+
+provision();
