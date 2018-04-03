@@ -29,6 +29,7 @@
     "mongoose": "^4.13.11",
     "mongoose-geojson-schema": "^2.1.2",
     "nodemon": "^1.15.0",
+    "opn": "^5.3.0",
     "uuid": "^3.2.1"
   },
   "repository": {
