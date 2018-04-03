@@ -12,5 +12,11 @@ module.exports = {
     username: '',
     password: '',
     url : 'mongodb://<user>:<password>@<url>'
-  }
+  },
+  jwt:{
+      privateKey:'joshinho'
+  },
+    smsGateway:{
+       url:"http://smpp.logitechsms.com:8080/api?action=sendmessage&username=wapi&password=wapi123&messagetype=SMS:TEXT"
+    }
 };
