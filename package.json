@@ -4,7 +4,7 @@
   "description": "Lipa is mobile money payment system for easey payment intergration to your site",
   "main": "backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha backend/test/**/**.spec.js"
   },
   "keywords": [
     "lipa",
@@ -35,5 +35,10 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/chrismelky/wapi"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.5",
+    "sinon": "^4.5.0"
   }
 }

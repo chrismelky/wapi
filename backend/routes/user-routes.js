@@ -1,10 +1,7 @@
-const User      = require('../controller/user-controller');
+const User      = require('../controllers/user-controller');
 
 exports.endPoints = [
     {method: 'GET',  path: '/users', config: User.getAll},
-    {method: 'POST', path: '/users', config: User.create},
-    {method: 'POST',  path: '/users/resend-verification-pin', config: User.resendVerificationPin},
-    {method: 'POST',  path: '/users/verify', config: User.verifyUser},
     {method: 'POST', path: '/users/update-profile-picture', config: User.uploadProfilePicture},
     {method: 'PUT', path: '/users/update-location', config: User.updateUserLocation},
     {method: 'PUT',  path: '/users/update-push-notification-id', config: User.updatePushNotificationId},

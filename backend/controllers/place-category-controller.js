@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const Boom = require('boom');
-const PlaceCategory = require('../model/place-category').PlaceCategory;
+const PlaceCategory = require('../models/place-category').PlaceCategory;
 const mongoose = require('mongoose');
 
 exports.create = {

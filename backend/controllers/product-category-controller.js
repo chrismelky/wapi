@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const Boom = require('boom');
-const ProductCategory = require('../model/product-category').ProductCategory;
+const ProductCategory = require('../models/product-category').ProductCategory;
 const mongoose = require('mongoose');
 
 exports.create = {
@@ -14,7 +14,6 @@ exports.create = {
     },
     handler: async function (request, h) {
        try {
-
            let category = new ProductCategory(request.payload);
            return category.save().then(function (newCategory) {
                return {"successfulMessage": "Category Created"};

@@ -5,8 +5,9 @@ const Path = require('path');
 const Inert = require('inert');
 const Db = require('./config/db');
 const config = require('./config/config');
-const routes = require('./route').routes;
-const validator = require('./authentication').validator;
+const routes = require('./routes').routes;
+const validator = require('./services/authentication-service').validator;
+require('./log');
 
 /** Define server at pot 4000 with CORS enabled for all routes**/
 const server = new Hapi.Server({
@@ -53,10 +54,10 @@ const init = async () => {
         server.route(routes);
 
         await server.start();
-        console.log('Server running at:', server.info.uri);
+        console.info('Server running at:'+server.info.uri);
     }
     catch (error){
-        console.log(error);
+        console.error(error);
         process.exit(1);
     }
 };

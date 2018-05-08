@@ -2,10 +2,9 @@
 
 const Joi = require('joi');
 const Boom = require('boom');
-const User = require('../model/user').User;
-const Location = require('../model/location').Location;
-const Product = require('../model/product').Product;
-const Place = require('../model/place').Place;
+const Location = require('../models/location').Location;
+const Product = require('../models/product').Product;
+const Place = require('../models/place').Place;
 const Helper = require('../Helper');
 const mongoose = require('mongoose');
 const fs = require("fs");
@@ -20,155 +19,7 @@ exports.getAll = {
         return  Location.find();
     }
 };
-exports.create = {
-    validate: {
-        payload: {
-            mobileNumber  : Joi.string().required()
-        }
-    },
-    auth:false,
-    handler: async function (request, h) {
-	    try {
-		     return User.findOne(request.payload).then(function(user){
-                 if(user === null){
-                    var newUser = new User(request.payload);
-                    return  newUser.save().then(function (createdUser) {
-                        try {
-                            let requestVerificationCode =  Helper.generateUserVerificationCode();
-                           return User.update({_id:createdUser._id},{requestVerificationCode:requestVerificationCode}).then(function (status) {
-                                if(status.nModified === 1) {
-                                    //Send SMS
-                                    console.log(requestVerificationCode);
-                                    Helper.sendVerificationSMS(createdUser.mobileNumber,requestVerificationCode);
-                                    return  {"successMessage":"Account Created"};
-                                }
-                                else {
-                                    console.log("Error update verification code 1");
-                                    return Boom.badRequest("Error Creating Account");
-                                }
-                            });
-                        }
-                        catch (error){
-                            console.log(error);
-                            return Boom.badRequest("Error Creating Account");
-                        }
-                    },function (error) {
-                        console.log(error);
-                    });
-			     }
-			    else{
-                    let requestVerificationCode =  Helper.generateUserVerificationCode();
-                     console.log(requestVerificationCode);
 
-                     return User.update({_id:user._id},{requestVerificationCode:requestVerificationCode}).then(function (status) {
-                        if(status.nModified === 1) {
-                            Helper.sendVerificationSMS(user.mobileNumber, requestVerificationCode);
-                            return  {"successMessage":"Account Exist"};
-                        }
-                        else {
-                            console.log("Error update verification code 2");
-                            return Boom.badRequest("Error Creating Account");
-                        }
-                    });
-			    }
-            });
-        }
-        catch (error){
-            console.log(error);
-            return Boom.badRequest(error.message);
-        }
-    }
-};
-exports.resendVerificationPin ={
-    validate: {
-        payload: {
-            mobileNumber  : Joi.string().required()
-        }
-    },
-    auth:false,
-    handler: async function (request, h) {
-        try {
-            return User.findOne(request.payload).then(function(user){
-                if(user === null || user === undefined){
-                    return Boom.badRequest("Account doest exist");
-                }
-                else{
-                    let requestVerificationCode =  Helper.generateUserVerificationCode();
-                    return Helper.sendVerificationSMS(user.mobileNumber, requestVerificationCode).then(function (response) {
-                        return User.update({_id:user._id},{requestVerificationCode:requestVerificationCode}).then(function (status) {
-                            if(status.nModified === 1) {
-                                 return  {"successMessage":"Verification code sent"};
-                            }
-                            else {
-                                console.log("Error creating verification code");
-                                return Boom.badRequest("Error Creating Verification Code");
-                            }
-                        });
-                    }).catch(function (error) {
-                            console.log(error);
-                            return Boom.badRequest("Message not set,Try again");
-                    });
-
-                }
-            });
-        }
-        catch (error){
-            console.log(error);
-            return Boom.badRequest(error.message);
-        }
-    }
-
-};
-exports.verifyUser = {
-    validate: {
-        payload: {
-            mobileNumber  : Joi.string().required(),
-            verificationCode  : Joi.number().required()
-        }
-    },
-    auth:false,
-    handler: async function (request, h) {
-        try {
-            let verificationData = {mobileNumber:request.payload.mobileNumber,requestVerificationCode:request.payload.verificationCode};
-            return await User.findOne(verificationData).then(function (user) {
-                 if(user !== null && user !== undefined){
-                     let baseDir = Path.join(__dirname, '..'+'/uploads/users/');
-                     let userDir = baseDir+user._id;
-                     let profileDir = userDir+'/profile';
-                     let productDir = userDir+'/products';
-                     let placeDir = userDir+'/places';
-                     let eventDir = userDir+'/events';
-                     if (!fs.existsSync(userDir)){
-                         fs.mkdirSync(userDir);
-                     }
-                     if (!fs.existsSync(profileDir)){
-                         fs.mkdirSync(profileDir);
-                     }
-                     if (!fs.existsSync(productDir)){
-                         fs.mkdirSync(productDir);
-                     }
-                     if (!fs.existsSync(placeDir)){
-                         fs.mkdirSync(placeDir);
-                     }
-                     if (!fs.existsSync(eventDir)){
-                         fs.mkdirSync(eventDir);
-                     }
-                     return User.update({_id:user._id},{isVerified:true,verificationCode:request.payload.verificationCode}).then(function (status) {
-                             let jwtToken = Helper.generateUserToken(user);
-                             console.log(jwtToken);
-                             return {"jwtToken":jwtToken,"successMessage":"User verified","userId":user._id};
-                     });
-                 }
-                 else{
-                     return Boom.badRequest("Invalid Code");
-                 }
-            });
-        }
-        catch (error){
-            return Boom.badRequest(error.message);
-        }
-    }
-};
 exports.updatePushNotificationId = {
     validate: {
         payload: {

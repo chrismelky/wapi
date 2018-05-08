@@ -5,16 +5,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Location = require('./location').Location;
 
+
 /**
  * @module  User
  * @description contain the details of Attribute
  */
 
-var UserSchema = new Schema({
+const UserSchema = new Schema({
     /**
-     User MobileNumber. It can only contain string, is required and unique field which is indexed.
+     User Phone Number. It can only contain string, is required and unique field which is indexed.
      */
-    mobileNumber : { type: String },
+    phoneNumber : { type: String },
 
     /**
      User Name. It can only contain string, is required field.
@@ -59,9 +60,9 @@ var UserSchema = new Schema({
 
 });
 
-var user = Location.discriminator('user', UserSchema);
+const user = Location.discriminator('user', UserSchema);
 
-/** export schema */
+/** export Model */
 module.exports = {
-    User : user
+   User:user
 };

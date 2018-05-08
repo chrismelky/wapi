@@ -1,10 +1,11 @@
-const User = require('./model/user').User;
+const User = require('../models/user').User;
 
 exports.validator = async(decoded, request) => {
-    return await User.findOne({mobileNumber:decoded.mobileNumber,isVerified:true}).
+    return await User.findOne({phoneNumber:decoded.phoneNumber,isVerified:true}).
       then((user)=>{
          if(user){
-             return { isValid:true,userId:user.userId};
+             request.userId = user._id;
+             return { isValid:true,artifacts:user};
          }
          else{
              return { isValid:false};
