@@ -1,15 +1,15 @@
 'use strict';
-let Mongoose = require('mongoose'),
-    config = require('./config');
 
-Mongoose.Promise = global.Promise;
-// Mongoose.connect(config.database.url);
-Mongoose.connect('mongodb://' + config.database.host + '/' + config.database.db,{ useMongoClient: true });
-let db = Mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error'));
-db.once('open', function callback() {
-  console.info("Connection with database succeeded.");
+let config = require('./config');
+
+const Sequelize = require('sequelize');
+const db = new Sequelize('postgres://postgres:p@ssw0rd@localhost:5432/wapi');
+db.authenticate()
+    .then(()=>{console.info("Connection with database succeeded.");})
+    .catch(error =>{
+      console.error("Fail to connect to database");
+      console.error(error);
 });
-
-exports.Mongoose = Mongoose;
 exports.db = db;
+
+

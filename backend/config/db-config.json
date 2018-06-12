@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "p@ssw0rd",
+    "database": "wapi",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "p@ssw0rd",
+    "database": "wapi",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "p@ssw0rd",
+    "database": "wapi",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

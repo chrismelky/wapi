@@ -30,6 +30,10 @@
     "mongoose-geojson-schema": "^2.1.2",
     "nodemon": "^1.15.0",
     "opn": "^5.3.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.7",
+    "sequelize-cli": "^4.0.0",
     "uuid": "^3.2.1"
   },
   "repository": {
